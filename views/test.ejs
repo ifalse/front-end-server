@@ -4,11 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="./libs/codemirror/lib/codemirror.css">
-
-  <link rel="stylesheet" href="./css/html.css">
   <script src="./libs/codemirror/lib/codemirror.js"></script>
+  <script src="./libs/codemirror/mode/xml/xml.js"></script>
+  <script src="./libs/codemirror/mode/css/css.js"></script>
+  <script src="./libs/codemirror/mode/javascript/javascript.js"></script>
+  <script src="./libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+  <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/html.css">
 </head>
 
 <body>
@@ -16,39 +20,39 @@
     <div class="container">
       <div class="navbar-header logo">
         <h1>
-          <a target="_blank" href="/" style="display: block;">RUNOOB.COM</a></h1>
+          <a target="_blank" href="/" style="display: block;">REANOD.COM</a></h1>
       </div>
     </div>
   </nav>
   <div class="container">
-    <div class="col-sm-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <form class="form-inline">
-            <div class="row">
-              <div class="col-xs-6">
-                <button type="button" class="btn btn-default">源代码：</button>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <form class="form-inline">
+              <div class="row">
+                <div class="col-xs-6">
+                  <button type="button" class="btn btn-default">源代码：</button>
+                </div>
+                <div class="col-xs-6 text-right">
+                  <button type="button" class="btn btn-success" onclick="submitTryit()" id="submitBTN"><span class="glyphicon glyphicon-send"></span> 点击运行</button>
+                </div>
               </div>
-              <div class="col-xs-6 text-right">
-                <button type="button" class="btn btn-success" onclick="submitTryit()" id="submitBTN"><span class="glyphicon glyphicon-send"></span> 点击运行</button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="panel-body">
-          <textarea id="textareaCode" class="form-control">
-            <%= textHtml %>
-          </textarea>
+            </form>
+          </div>
+          <div class="panel-body">
+            <textarea id="textareaCode" class="form-control"><%= textHtml %></textarea>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <button type="button" class="btn btn-default">运行结果</button>
-        </div>
-        <div class="panel-body">
-          <div id="iframewrapper"></div>
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <button type="button" class="btn btn-default">运行结果</button>
+          </div>
+          <div class="panel-body">
+            <div id="iframewrapper"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -56,29 +60,15 @@
 
 </body>
 <script>
-  var mixedMode = {
-    name: "htmlmixed",
-    scriptTypes: [{
-      matches: /\/x-handlebars-template|\/x-mustache/i,
-      mode: null
-    }, {
-      matches: /(text|application)\/(x-)?vb(a|script)/i,
-      mode: "vbscript"
-    }]
-  };
   var editor = CodeMirror.fromTextArea(document.getElementById("textareaCode"), {
-    mode: mixedMode,
+    mode: 'htmlmixed',
     selectionPointer: true,
     lineNumbers: false,
     matchBrackets: true,
-    indentUnit: 4,
+    indentUnit: 2,
     indentWithTabs: true,
     lineWrapping: true,
-    foldGutter: true,
-    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-    extraKeys: {
-      "Ctrl-Q": "autocomplete"
-    }
+    extraKeys: {}
   });
 
   window.addEventListener("resize", autodivheight);
@@ -112,7 +102,7 @@
     var basepath_flag = 1;
     var basepath = '';
     if (basepath_flag) {
-      basepath = '<base href="http://192.168.0.6:8080/hifactory/" target="_blank">';
+      basepath = '<base href="http://www.runoob.com" target="_blank">';
     }
     if (array_matches_head) {
       text = text.replace('<head>', '<head>' + basepath);
