@@ -48,6 +48,8 @@ body {
 }
 
 .logo a {
+  font-family: -webkit-pictograph;
+  font-weight: bold;
   font-size: 26px;
   color: #fff;
   text-decoration: none;
