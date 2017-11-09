@@ -18,7 +18,10 @@ var test = require('./routes/test');
 var mongoose = require('mongoose');
 
 global.dbHandel = require('./database/dbHandel');
-global.db = mongoose.connect("mongodb://localhost:27017/front-end-search");
+global.db = mongoose.connect("mongodb://localhost:27017/front-end-search", function(err) {
+  if (err) throw err;
+  console.log('Successfully connected to MongoDB');
+});
 
 //引用express-session  
 var session = require('express-session');
