@@ -18,7 +18,7 @@ var test = require('./routes/test');
 var mongoose = require('mongoose');
 
 global.dbHandel = require('./database/dbHandel');
-global.db = mongoose.connect("mongodb://localhost:27017/front-end-search", function(err) {
+global.db = mongoose.connect("mongodb://localhost:27017/front-end-server", function(err) {
   if (err) throw err;
   console.log('Successfully connected to MongoDB');
 });
