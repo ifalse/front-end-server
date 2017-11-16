@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+  <script src="../vendor/pace/pace.min.js"></script>
+  <link rel="stylesheet" href="../vendor/pace/pace-theme-minimal.css" rel="stylesheet">
+  <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../vendor/toastr/toastr.min.css">
+  <link rel='stylesheet' href='../stylesheets/login.css' />
+
+</head>
+
+<body screen_capture_injected="true">
+  <!-- begin -->
+  <div id="login">
+    <div class="wrapper">
+      <div class="login">
+        <form action="#" method="post" class="container offset1 loginform">
+          <div id="owl-login" class="">
+            <div class="hand"></div>
+            <div class="hand hand-r"></div>
+            <div class="arms">
+              <div class="arm"></div>
+              <div class="arm arm-r"></div>
+            </div>
+          </div>
+          <div class="pad">
+            <input type="hidden" name="_csrf" value="9IAtUxV2CatyxHiK2LxzOsT6wtBE6h8BpzOmk=">
+            <div class="control-group">
+              <div class="controls">
+                <label for="username" class="glyphicon glyphicon-user"></label>
+                <input id="username" type="text" name="username" placeholder="Email" tabindex="1" autofocus="autofocus" class="form-control input-medium">
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <label for="password" class="glyphicon glyphicon-lock"></label>
+                <input id="password" type="password" name="password" placeholder="Password" tabindex="2" class="form-control input-medium">
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <a href="#" tabindex="5" class="btn pull-left btn-link text-muted">Forgot password?</a>
+            <a href="#" tabindex="6" class="btn btn-link text-muted" id="register-in">Sign Up</a>
+            <button type="button" tabindex="4" class="btn btn-primary" data-loading-text="waiting" id="login-in">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="../vendor/jquery/jquery-1.12.3.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/toastr/toastr.min.js"></script>
+    <script>
+      $(function() {
+        $('#login #password').focus(function() {
+          $('#owl-login').addClass('password');
+        }).blur(function() {
+          $('#owl-login').removeClass('password');
+        });
+        /* 注册按钮 */
+        $("#register-in").click(function() {
+          location.href = 'register';
+        });
+        /* 登录按钮 */
+        $("#login-in").click(function() {
+          $(this).button('loading').delay(2500).queue(function() {
+            $(this).button('reset');
+            $(this).dequeue(); 
+          });
+          toastr.options = {
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "timeOut": 2000,
+          }
+          var username = $("#username").val();
+          var password = $("#password").val();
+          if(username == ""){
+            Command: toastr["info"]('请输入用户名！')
+            $("#username").focus();
+            return;
+          }else if(password == ""){
+            Command: toastr["info"]('请输入密码！')
+            $("#password").focus();
+            return;
+          }
+          var data = {
+            "uname": username,
+            "upwd": password
+          };
+          $.ajax({
+            url: '/user/login',
+            type: 'post',
+            data: data,
+            success: function(data, status) {
+              if (data.code == '0') {
+                Command: toastr["warning"](data.msg)
+                $("#username").focus();
+              }
+              else if (data.code == '1') {
+                Command: toastr["warning"](data.msg)
+                $("#password").focus();
+              }
+              else if(data.code == '2'){
+                Command: toastr["success"](data.msg)
+                setTimeout(() => {
+                  location.href = '../';
+                }, 2000);
+              }
+            },
+            error: function(data, status) {
+              Command: toastr["error"]("系统内部错误")
+            }
+          });
+        });
+
+        $('.loginform').keyup(function(e){
+          if(e.keyCode == 13 && !$("#login-in.disabled")[0]){
+            $("#login-in").click();
+          }
+        })
+      });
+    </script>
+  </div>
+  <!-- end -->
+</body>
+</head>
+
+</html>

@@ -6,12 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
 var test = require('./routes/test');
-// var login = require('./routes/login');
-// var register = require('./routes/register');
-// var home = require('./routes/home');
-// var logout = require('./routes/logout');
 
 //新增multer和mongoose  
 //var multer = require('multer');
@@ -46,26 +42,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
-  res.locals.user = req.session.user; //从session获取user对象  
-  var err = req.session.error; //获取错误信息  
-  delete req.session.error;
-  res.locals.message = ""; //展示信息的message  
-  if (err) {
-    res.locals.message = '<div class="alert alert-danger" style="margin-bottom:20px;color:red">' + err + '</div>';
-  }
-  next(); //中间件传递  
-});
-
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', user);
 app.use('/test', test);
-
-app.use('/login', index);
-app.use('/register', index);
-app.use('/home', index);
-app.use('/logout', index);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
